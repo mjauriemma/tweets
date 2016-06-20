@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
 
     tweets.searchAsync(term)
         .then(response => {
-          //console.log("Answer: " + JSON.stringify(response));
             return res.json(response);
         })
         .catch(err => {

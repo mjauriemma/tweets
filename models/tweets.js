@@ -32,8 +32,7 @@ function search(query, callback) {
   //    console.log(i);
   //    console.log(results[keys[i]]);
   //  }
-  console.log(results.statuses[0]);
-  console.log(results.search_metadata.count);
+  
 
     return callback(null, results);
   });
