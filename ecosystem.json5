@@ -1,0 +1,36 @@
+{
+  apps : [
+    {
+      name      : "idology",
+      script    : "index.js",
+      env: {
+        COMMON_VARIABLE: "true"
+      },
+      env_production : {
+        NODE_ENV: "production"
+      }
+    }
+  ],
+
+  deploy : {
+    production : {
+      user : "rheumpro",
+      host : "rheumpro.cis.uab.edu",
+      ref  : "origin/master",
+      repo : "git@git.cis.uab.edu:rheumpro/idology.git",
+      path : "/home/rheumpro/rheumpro/idology",
+      "post-deploy" : " npm install && npm run apidoc && pm2 startOrRestart ecosystem.json5 --env production"
+    },
+    development : {
+      user : "rheumpro",
+      host : "dev-rheumpro.cis.uab.edu",
+      ref  : "origin/development",
+      repo : "git@git.cis.uab.edu:rheumpro/idology.git",
+      path : "/home/rheumpro/rheumpro/idology",
+      "post-deploy" : "npm install && npm run apidoc && pm2 startOrRestart ecosystem.json5 --env development",
+      env  : {
+        NODE_ENV: "development"
+      }
+    }
+  }
+}

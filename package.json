@@ -1,0 +1,49 @@
+{
+  "name": "tweetFetcher",
+  "version": "1.0.0",
+  "description": "Fetches Tweets based on search terms",
+  "author": "Matthew Auriemma <mjaur@uab.edu>",
+  "scripts": {
+    "start": "node index.js",
+    "cover": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- tests --recursive -R spec --timeout 30000",
+    "jsdoc": "./node_modules/.bin/jsdoc -r config/* controllers/* helpers/* middleware/* models/* scripts/* README.md -d docs",
+    "apidoc": "./node_modules/.bin/apidoc -i controllers -o apidocs"
+  },
+  "dependencies": {
+    "apn": "1.4.x",
+    "async": "~0.9.0",
+    "bcrypt-nodejs": "~0.0.3",
+    "body-parser": "~1.0.0",
+    "bunyan": "^1.3.4",
+    "colors": "^1.1.0",
+    "commander": "^2.8.0",
+    "cors": "^2.5.2",
+    "ejs": "^2.3.1",
+    "email-templates": "^1.2.0",
+    "express": "~4.0.0",
+    "express-bunyan-logger": "^1.1.1",
+    "express-jwt": "^3.0.0",
+    "fetch-tweets": "^0.1.7",
+    "jwt-simple": "^0.3.0",
+    "moment": "^2.8.3",
+    "morgan": "~1.0.0",
+    "mysql": "2.1.x",
+    "node-gcm": "0.9.x",
+    "nodemailer": "^1.3.0",
+    "nodemailer-sendmail-transport": "^1.0.0",
+    "querystring": "^0.2.0",
+    "request": "^2.67.0",
+    "restler": "^3.2.2",
+    "sql": "^0.48.0",
+    "sql-generate": "^1.0.0",
+    "underscore": "^1.7.0",
+    "xml2js": "^0.4.13"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.5",
+    "mocha": "^2.1.0",
+    "should": "3.1.x",
+    "sinon": "^1.12.2",
+    "supertest": "0.9.x"
+  }
+}
