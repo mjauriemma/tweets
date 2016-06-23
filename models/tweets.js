@@ -110,7 +110,7 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, c
     fav_count: fav,
     date: date
   }).toQuery();
-
+  console.log(query);
   return db.executeSqlQueryAsync(query)
     .then(function(result) {
       console.log("many successful returns")
