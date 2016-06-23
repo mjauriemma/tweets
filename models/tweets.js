@@ -24,14 +24,18 @@ function search(queries, callback) {
   var date = new Date();
   //queries = [{query :'humira'}, {query: 'apple'}];
   var results=[];
+  console.log("calling insert");
   create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
+    console.log("insert done");
     if (err) {
+      console.log("Errored")
       return callback(err);
     }
     else {
+      console.log("Succeeded")
       return callback(null, results);
     }
-  })
+  });
   // terms.queries.forEach(function process(element, index, array){
   //   console.log("term: " + element.query);
   //
@@ -92,22 +96,24 @@ function fetch (options, res, callback) {
 
 
 function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, callback) {
+  console.log("hello");
   let query = schema.insert({
     id: tweetId,
-    month:month,
-    day:day,
-    year:year,
-    text:text,
-    location:loc,
-    lat:lat,
-    long:lon,
-    retweet_count:rt,
-    fav_count:fav,
-    date:date
+    month: month,
+    day: day,
+    year: year,
+    text: text,
+    location: loc,
+    lat: lat,
+    long: lon,
+    retweet_count: rt,
+    fav_count: fav,
+    date: date
   }).toQuery();
 
   return db.executeSqlQueryAsync(query)
     .then(function(result) {
+      console.log("many successful returns")
       return result.insertId;
     })
     .nodeify(callback);
