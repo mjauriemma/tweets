@@ -24,33 +24,34 @@ function search(queries, callback) {
   var date = new Date();
   //queries = [{query :'humira'}, {query: 'apple'}];
   var results=[];
-  terms.queries.forEach(function process(element, index, array){
-    console.log("term: " + element.query);
-    create(1, function (err, results) {
-      if (err) {
-        return callback(err);
-      }
-      else {
-        return callback(null, results);
-      }
-    })
-      // fetch({
-      //   q: element.query,
-      //   lang: 'en',
-      //   count: 100,
-      //   include_entities: 'FALSE',
-      //   until: (date.getFullYear() + '-' + (date.getMonth()+1) +'-'+ date.getDate())
-      // }, results, function (err, result) {
-      //   if (err) {
-      //     return callback(err);
-      //   }
-      //   else {
-      //     console.log('FINISHED')
-      //     results.push(result);
-      //   }
-      // });
-  });
-  console.log("results callback");
+  create(1,06,23,2016,"This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016-06-23",  function (err, results) {
+    if (err) {
+      return callback(err);
+    }
+    else {
+      return callback(null, results);
+    }
+  })
+  // terms.queries.forEach(function process(element, index, array){
+  //   console.log("term: " + element.query);
+  //
+  //     fetch({
+  //       q: element.query,
+  //       lang: 'en',
+  //       count: 100,
+  //       include_entities: 'FALSE',
+  //       until: (date.getFullYear() + '-' + (date.getMonth()+1) +'-'+ date.getDate())
+  //     }, results, function (err, result) {
+  //       if (err) {
+  //         return callback(err);
+  //       }
+  //       else {
+  //         console.log('FINISHED')
+  //         results.push(result);
+  //       }
+  //     });
+  // });
+  // console.log("results callback");
   return callback (null, results);
 };
 
@@ -90,9 +91,19 @@ function fetch (options, res, callback) {
 };
 
 
-function create(tweetId, callback) {
+function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, callback) {
   let query = schema.insert({
     id: tweetId,
+    month:month,
+    day:day,
+    year:year,
+    text:text,
+    location:loc,
+    lat:lat,
+    long:lon,
+    retweet_count:rt,
+    fav_count:fav,
+    date:date
   }).toQuery();
 
   return db.executeSqlQueryAsync(query)
