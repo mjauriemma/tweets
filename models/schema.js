@@ -1,3 +1,5 @@
+var sql = require('sql');
+
 exports.tweets = sql.define({
 	name: 'tweets',
 	columns: [
