@@ -28,7 +28,7 @@ function search(queries, callback) {
   create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
     console.log("insert done");
     if (err) {
-      console.log("Errored")
+      console.log("Errored " + err.message );
       return callback(err);
     }
     else {
