@@ -26,6 +26,14 @@ function search(queries, callback) {
   var results=[];
   terms.queries.forEach(function process(element, index, array){
     console.log("term: " + element.query);
+    create(1, function (err, results) {
+      if (err) {
+        return callback(err);
+      }
+      else {
+        return callback(null, results);
+      }
+    })
       // fetch({
       //   q: element.query,
       //   lang: 'en',
