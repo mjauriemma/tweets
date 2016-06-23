@@ -8,6 +8,10 @@ var Twitter = require('twitter');
 var querystring = require("querystring");
 var FetchTweets = require('fetch-tweets');
 
+var dbFactory = require('./db');
+var db = Promise.promisifyAll(dbFactory(config.db));
+let schema = require('./schema').tweets;
+
 var apiKeys = {
   consumer_key: config.tweet.consumer_key,
   consumer_secret: config.tweet.consumer_secret
@@ -75,5 +79,18 @@ function fetch (options, res, callback) {
       }
   });
 };
+
+
+function create(tweetId, callback) {
+  let query = schema.insert({
+    id: tweetId,
+  }).toQuery();
+
+  return db.executeSqlQueryAsync(query)
+    .then(function(result) {
+      return result.insertId;
+    })
+    .nodeify(callback);
+}
 
 exports.search = search;
