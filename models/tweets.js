@@ -24,7 +24,7 @@ function search(queries, callback) {
   var date = new Date();
   //queries = [{query :'humira'}, {query: 'apple'}];
   var results=[];
-  create(1,06,23,2016,"This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
+  create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
     if (err) {
       return callback(err);
     }
