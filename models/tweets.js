@@ -7,6 +7,7 @@ var terms = require('../terms');
 var Twitter = require('twitter');
 var querystring = require("querystring");
 var FetchTweets = require('fetch-tweets');
+let Promise = require('bluebird');
 
 var dbFactory = require('./db');
 var db = Promise.promisifyAll(dbFactory(config.db));
