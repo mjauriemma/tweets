@@ -11,8 +11,6 @@ let errors = require('../helpers/error');
 
 router.get('/', (req, res) => {
     let term = req.query.term;
-    console.log("In Controller");
-    console.log(term);
     if (!term) {
         return webUtil.processError(res, 400, 'Search query param must be provided', 400);
     }
