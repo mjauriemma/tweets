@@ -24,37 +24,35 @@ function search(queries, callback) {
   var date = new Date();
   //queries = [{query :'humira'}, {query: 'apple'}];
   var results=[];
-  console.log("calling insert");
-  create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
-    console.log("insert done");
-    if (err) {
-      console.log("Errored " + err.message );
-      return callback(err);
-    }
-    else {
-      console.log("Succeeded")
-      return callback(null, results);
-    }
-  });
-  // terms.queries.forEach(function process(element, index, array){
-  //   console.log("term: " + element.query);
-  //
-  //     fetch({
-  //       q: element.query,
-  //       lang: 'en',
-  //       count: 100,
-  //       include_entities: 'FALSE',
-  //       until: (date.getFullYear() + '-' + (date.getMonth()+1) +'-'+ date.getDate())
-  //     }, results, function (err, result) {
-  //       if (err) {
-  //         return callback(err);
-  //       }
-  //       else {
-  //         console.log('FINISHED')
-  //         results.push(result);
-  //       }
-  //     });
+  // create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
+  //   if (err) {
+  //     console.log("Errored " + err.message );
+  //     return callback(err);
+  //   }
+  //   else {
+  //     return callback(null, results);
+  //   }
   // });
+  terms.queries.forEach(function process(element, index, array){
+    // console.log("term: " + element.query);
+
+      fetch({
+        // q: 'humira',
+        q: element.query,
+        lang: 'en',
+        count: 100,
+        include_entities: 'FALSE',
+        until: (date.getFullYear() + '-' + (date.getMonth()+1) +'-'+ date.getDate())
+      }, results, function (err, result) {
+        if (err) {
+          return callback(err);
+        }
+        else {
+          console.log('FINISHED')
+          results.push(result);
+        }
+      });
+  });
   // console.log("results callback");
   return callback (null, results);
 };
@@ -65,13 +63,25 @@ function fetch (options, res, callback) {
     var id;
     console.log("length " + results.statuses.length);
     if (results.statuses.length > 0) {
-     //console.log("hello!");
      results.statuses.forEach(function process (element, index, array) {
        id = element.id;
        if(element.text.indexOf('RT') === -1) {
          var date2 = new Date(Date.parse(element.created_at.replace(/( \+)/, ' UTC$1')));
-         //console.log((date2.getMonth() + 1) + '-' + date2.getDate() + '-' + date2.getFullYear());
-         res.push(id);
+         if (element.place === null) {
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, null, null, element.retweet_count, element.favorite_count, date2, function (err, result) {
+             if (err) {
+               console.log(err.message)
+               return callback(err);
+             }
+           })
+         } else {
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][1], element.place.bounding_box.coordinates[0][0][2], element.retweet_count, element.favorite_count, date2, function(err, result) {
+             if (err) {
+               console.log(err.message);
+               return callback(err);
+             }
+           });
+         }
         }
       });
       if (results.statuses.length===100) {
@@ -88,7 +98,6 @@ function fetch (options, res, callback) {
         }
       }
       else {
-        console.log('Done');
         callback(null, res);
       }
   });
@@ -96,7 +105,6 @@ function fetch (options, res, callback) {
 
 
 function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, callback) {
-  console.log("hello");
   // let query = schema.insert({
   //   id: tweetId,
   //   month: month,
@@ -110,12 +118,11 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, c
   //   fav_count: fav,
   //   date: date
   // }).toQuery();
-  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
-  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date], callback)
   //console.log(query);
   //return db.executeSqlQueryAsync(query)
+  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date], callback)
     .then(function(result) {
-      console.log("many successful returns")
       return result.insertId;
     })
     .nodeify(callback);
