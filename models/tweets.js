@@ -22,17 +22,8 @@ var fetchTweets = new FetchTweets(apiKeys, false);
 
 function search(queries, callback) {
   var date = new Date();
-  //queries = [{query :'humira'}, {query: 'apple'}];
   var results=[];
-  // create("1","06","23","2016","This is a Tweet","UAB", "12.4333333","12.4333333", "04","12","2016 6 23",  function (err, results) {
-  //   if (err) {
-  //     console.log("Errored " + err.message );
-  //     return callback(err);
-  //   }
-  //   else {
-  //     return callback(null, results);
-  //   }
-  // });
+
   terms.queries.forEach(function process(element, index, array){
     // console.log("term: " + element.query);
 
@@ -75,7 +66,8 @@ function fetch (options, res, callback) {
              }
            })
          } else {
-           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][1], element.place.bounding_box.coordinates[0][0][2], element.retweet_count, element.favorite_count, date2, function(err, result) {
+           //console.log("Lat: " +element.place.bounding_box.coordinates[0][0][0] +"Lon: "+ element.place.bounding_box.coordinates[0][0][1])
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][0], element.place.bounding_box.coordinates[0][0][1], element.retweet_count, element.favorite_count, date2, function(err, result) {
              if (err) {
                console.log(err.message);
                return callback(err);
