@@ -28,7 +28,7 @@ function search(queries, callback) {
     // console.log("term: " + element.query);
 
       fetch({
-        // q: 'humira',
+        //q: 'humira',
         q: element.query,
         lang: 'en',
         count: 100,
@@ -51,15 +51,16 @@ function search(queries, callback) {
 function fetch (options, res, callback) {
 
   fetchTweets.byTopic(options, function(results){
+    var term = options.q;
     var id;
-    console.log("length " + results.statuses.length);
     if (results.statuses.length > 0) {
      results.statuses.forEach(function process (element, index, array) {
        id = element.id;
        if(element.text.indexOf('RT') === -1) {
          var date2 = new Date(Date.parse(element.created_at.replace(/( \+)/, ' UTC$1')));
          if (element.place === null) {
-           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, null, null, element.retweet_count, element.favorite_count, date2, options.q, function (err, result) {
+           //console.log(options.q);
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, null, null, element.retweet_count, element.favorite_count, date2, term, function (err, result) {
              if (err) {
                console.log(err.message)
                return callback(err);
@@ -67,7 +68,8 @@ function fetch (options, res, callback) {
            })
          } else {
            //console.log("Lat: " +element.place.bounding_box.coordinates[0][0][0] +"Lon: "+ element.place.bounding_box.coordinates[0][0][1])
-           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][0], element.place.bounding_box.coordinates[0][0][1], element.retweet_count, element.favorite_count, date2, options.q, function(err, result) {
+           //console.log(options.q);
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][0], element.place.bounding_box.coordinates[0][0][1], element.retweet_count, element.favorite_count, date2, term, function(err, result) {
              if (err) {
                console.log(err.message);
                return callback(err);
