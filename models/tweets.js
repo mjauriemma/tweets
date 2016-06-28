@@ -96,7 +96,7 @@ function fetch (options, res, callback) {
 };
 
 
-function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, query, callback) {
+function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, term, callback) {
   // let query = schema.insert({
   //   id: tweetId,
   //   month: month,
@@ -113,7 +113,7 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, q
   //console.log(query);
   //return db.executeSqlQueryAsync(query)
   let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`, `query`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
-  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, query], callback)
+  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, term], callback)
     .then(function(result) {
       return result.insertId;
     })
