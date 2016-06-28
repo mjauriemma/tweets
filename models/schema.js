@@ -13,6 +13,7 @@ exports.tweets = sql.define({
 		{ name: 'long' },
     { name: 'retweet_count' },
     { name: 'fav_count' },
-    { name: 'date' }
+    { name: 'date' },
+		{ name: 'query'}
 	]
 });
