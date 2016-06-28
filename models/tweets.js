@@ -59,7 +59,7 @@ function fetch (options, res, callback) {
        if(element.text.indexOf('RT') === -1) {
          var date2 = new Date(Date.parse(element.created_at.replace(/( \+)/, ' UTC$1')));
          if (element.place === null) {
-           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, null, null, element.retweet_count, element.favorite_count, date2, function (err, result) {
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, null, null, element.retweet_count, element.favorite_count, date2, options.q, function (err, result) {
              if (err) {
                console.log(err.message)
                return callback(err);
@@ -67,7 +67,7 @@ function fetch (options, res, callback) {
            })
          } else {
            //console.log("Lat: " +element.place.bounding_box.coordinates[0][0][0] +"Lon: "+ element.place.bounding_box.coordinates[0][0][1])
-           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][0], element.place.bounding_box.coordinates[0][0][1], element.retweet_count, element.favorite_count, date2, function(err, result) {
+           create(element.id, (date2.getMonth()+1), date2.getDate(), date2.getFullYear(), element.text, element.user.location, element.place.bounding_box.coordinates[0][0][0], element.place.bounding_box.coordinates[0][0][1], element.retweet_count, element.favorite_count, date2, options.q, function(err, result) {
              if (err) {
                console.log(err.message);
                return callback(err);
@@ -96,7 +96,7 @@ function fetch (options, res, callback) {
 };
 
 
-function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, callback) {
+function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, query, callback) {
   // let query = schema.insert({
   //   id: tweetId,
   //   month: month,
@@ -112,8 +112,8 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, c
   // }).toQuery();
   //console.log(query);
   //return db.executeSqlQueryAsync(query)
-  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
-  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date], callback)
+  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`, `query`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+  return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, query], callback)
     .then(function(result) {
       return result.insertId;
     })
