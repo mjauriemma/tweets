@@ -132,11 +132,11 @@ function exportData (callback) {
       return callback(err);
     }
     else {
-      return callback(null, fs.writeFile('~/tweetStorage/tweets.csv', response));
+      return fs.writeFile('~/tweetStorage/tweets.csv', response);
     }
   })
 
-      return fs.writeFile('~/tweetStorage/tweets.csv', response);
+      //return fs.writeFile('~/tweetStorage/tweets.csv', response);
 
 
 }
