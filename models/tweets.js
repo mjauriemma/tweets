@@ -129,13 +129,9 @@ function exportData (callback) {
   let query = "Select * FROM `tweets` WHERE `export` = 0";
   return db.executeQuery(query,[], callback)
   .then(function(result) {
-    fs.writeFile('~/tweetStorage/tweets.csv', result, function(err) {
+    return fs.writeFile('~/tweetStorage/tweets.csv', result, function(err) {
       if (err) return console.log(err);
-      else {
-        return result;
-      }
-    });
-    return result;
+    })
   })
   .nodeify(callback);
 }
