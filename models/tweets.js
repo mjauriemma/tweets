@@ -124,7 +124,7 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, t
 }
 
 
-function export (callback) {
+function exportData (callback) {
   let query = "Select * FROM `tweets` WHERE `export` = 0";
   return db.executeQueryAsync(query,[], callback)
   .then(function(result) {
@@ -138,4 +138,5 @@ function export (callback) {
   .nodeify(callback);
 }
 
+exports.exportData = exportData;
 exports.search = search;
