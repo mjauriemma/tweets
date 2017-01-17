@@ -8,6 +8,7 @@ var Twitter = require('twitter');
 var querystring = require("querystring");
 var FetchTweets = require('fetch-tweets');
 let Promise = require('bluebird');
+let fs = require('fs');
 
 var dbFactory = require('./db');
 var db = Promise.promisifyAll(dbFactory(config.db));
@@ -120,6 +121,21 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, t
       return result.insertId;
     })
     .nodeify(callback);
+}
+
+
+function export (callback) {
+  let query = "Select * FROM `tweets` WHERE `export` = 0";
+  return db.executeQueryAsync(query,[], callback)
+  .then(function(result) {
+    fs.writeFile('~/tweetStorage/tweets.csv', result, ,callback) {
+      if (err) return console.log(err);
+      else{
+        return callback(null, null);
+      }
+    }
+  })
+  .nodeify(callback);
 }
 
 exports.search = search;
