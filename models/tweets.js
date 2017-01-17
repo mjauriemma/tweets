@@ -127,14 +127,15 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, t
 
 function exportData (callback) {
   let query = "Select * FROM `tweets` WHERE `export` = 0";
-  return db.executeQueryAsync(query,[], callback)
+  return db.executeQuery(query,[], callback)
   .then(function(result) {
-    fs.writeFile('~/tweetStorage/tweets.csv', result, function (err) {
+    fs.writeFile('~/tweetStorage/tweets.csv', result, function(err) {
       if (err) return console.log(err);
       else {
         return result;
       }
-    })
+    });
+    return result;
   })
   .nodeify(callback);
 }
