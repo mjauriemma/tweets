@@ -21,7 +21,7 @@ var apiKeys = {
 
 var fetchTweets = new FetchTweets(apiKeys, false);
 
-function search(queries, callback) {
+function search(callback) {
   var date = new Date();
   var results=[];
 
