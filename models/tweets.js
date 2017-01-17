@@ -131,6 +131,9 @@ function exportData (callback) {
   .then(function(result) {
     fs.writeFile('~/tweetStorage/tweets.csv', result, function (err) {
       if (err) return console.log(err);
+      else {
+        return result;
+      }
     })
   })
   .nodeify(callback);
