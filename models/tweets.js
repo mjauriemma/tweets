@@ -114,7 +114,8 @@ function create(tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, t
   // }).toQuery();
   //console.log(query);
   //return db.executeSqlQueryAsync(query)
-  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`, `query`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+  let query = "INSERT INTO `tweets`  (`id`, `month`, `day`, `year`, `text`, `location`, `lat`, `long`, `retweet_count`, `fav_count`, `date`, `query`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+//console.log("Term: " + term);
   return db.executeQueryAsync(query,[tweetId, month, day, year, text, loc, lat, lon, rt, fav, date, term], callback)
     .then(function(result) {
       return result.insertId;
