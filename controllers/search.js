@@ -10,12 +10,7 @@ let errors = require('../helpers/error');
 
 
 router.get('/', (req, res) => {
-    let term = req.query.term;
-    if (!term) {
-        return webUtil.processError(res, 400, 'Search query param must be provided', 400);
-    }
-
-    tweets.searchAsync(term)
+    tweets.searchAsync()
         .then(response => {
             return res.json(response);
         })
